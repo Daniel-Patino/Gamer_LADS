@@ -17,7 +17,6 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("1");
             if (PauseState == true)
             {
                 Resume();
@@ -31,7 +30,6 @@ public class PauseGame : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("2");
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
         PauseState = false;
@@ -39,7 +37,6 @@ public class PauseGame : MonoBehaviour
 
     void Pause()
     {
-        Debug.Log("3");
         PauseMenu.SetActive(true);
         Time.timeScale = 0f;
         PauseState = true;
