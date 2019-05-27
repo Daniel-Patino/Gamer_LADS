@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // for some reason this script does not work at canvas level.
 public class PauseGame : MonoBehaviour
@@ -11,7 +12,7 @@ public class PauseGame : MonoBehaviour
     public static bool PauseState = false;
     public GameObject PauseMenu;
 
-    // Update is called once per frame
+    // when escape is pressed
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -46,8 +47,7 @@ public class PauseGame : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        Debug.Log("Loading menu...");
-        // https://www.youtube.com/watch?v=JivuXdrIHK0 9:10 forward
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
     public void EndGame()
