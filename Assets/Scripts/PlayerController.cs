@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody thisRigidBody;
     private Vector3 direction;
 
+
+
     /*
      * This method will allow the player to move his ship by positioning his mouse anywhere on the screen
      * The ship will attempt to follow the mouse in accordance to the moveSpeed of the ship

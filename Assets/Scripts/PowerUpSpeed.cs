@@ -9,7 +9,7 @@ public class PowerUpSpeed : MonoBehaviour
     {
         if(other.tag == "Player" && other.GetComponent<PlayerController>() != null)
         {
-            other.GetComponent<PlayerController>().moveSpeed = other.GetComponent<PlayerController>().moveSpeed * 2;
+            other.GetComponent<PlayerController>().moveSpeed = other.GetComponent<PlayerController>().moveSpeed * moveSpeedMultiplier;
         }
     }
 }
