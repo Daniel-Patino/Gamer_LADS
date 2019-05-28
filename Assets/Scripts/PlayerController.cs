@@ -82,9 +82,13 @@ public class PlayerController : MonoBehaviour
      */ 
     private void fireProjectileOnButtonDown()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if(PauseGame.PauseState == false)
         {
-            Instantiate(projectile, shotSpawn.position, shotSpawn.rotation);
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Instantiate(projectile, shotSpawn.position, shotSpawn.rotation);
+            }
+
         }
     }
 
