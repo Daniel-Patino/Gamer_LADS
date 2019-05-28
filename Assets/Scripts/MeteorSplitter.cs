@@ -14,15 +14,31 @@ public class MeteorSplitter : MonoBehaviour
     private bool toSplit = false;
     private bool isQuitting = false;
 
+    private void Awake()
+    {
+        isQuitting = false;
+    }
+
     /*
      * When the application quits all gameObjects are destroyed, this conflicts with our
      * implementation of OnDestroy, therefore we must set a flag that will prevent meteors
      * from spawningObjects when they are destroyed by the application quitting.
-     */ 
+     */
     private void OnApplicationQuit()
     {
         isQuitting = true;
     }
+
+    /*
+    private void ExitScene()
+    {
+        if (!PauseGame.InGameState)
+        {
+            Debug.Log("1.2");
+            isQuitting = true;
+        }
+    }
+    */
 
     /*
      * 
@@ -47,6 +63,11 @@ public class MeteorSplitter : MonoBehaviour
      */
     private void OnDestroy()
     {
+        if (!PauseGame.InGameState)
+        {
+            isQuitting = true;
+        }
+
         if (toSplit && !isQuitting)
             spawnObjects();
     }

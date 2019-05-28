@@ -13,6 +13,11 @@ public class CanRespawn : MonoBehaviour
     private PlayerRespawnController respawnController;
     private bool isQuitting = false;
 
+    private void Awake()
+    {
+        isQuitting = false;
+    }
+
     public void Start()
     {
         if (respawnController == null)
@@ -25,9 +30,26 @@ public class CanRespawn : MonoBehaviour
     {
         isQuitting = true;
     }
+    
+    // this doesn't work because it's never actually called. OnDestroy however is auto-called upon scene change.
+    /*
+    private void ExitScene()
+    {
+        if (!PauseGame.InGameState)
+        {
+            Debug.Log("1.1");
+            isQuitting = true;
+        }
+    }
+    */
 
     private void OnDestroy()
     {
+        if (!PauseGame.InGameState)
+        {
+            isQuitting = true;
+        }
+
         if (!isQuitting)
         {
             Vector3 playerRespawnPosition = respawnController.playerRespawnPoint.transform.position;
