@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5295707923915365417}
   - component: {fileID: 5295707923915365422}
   - component: {fileID: 5295707923915365423}
-  - component: {fileID: 5295707923915365421}
+  - component: {fileID: -6959198052407976814}
   m_Layer: 0
   m_Name: Shield1
   m_TagString: Player
@@ -113,7 +113,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5295707923915365421
+--- !u!114 &-6959198052407976814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5295707923915365420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a260fe51ddb1d2458de0cdb3cba60ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dc92410c3a2fc48b45520ebfee2d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowerUp: 1
