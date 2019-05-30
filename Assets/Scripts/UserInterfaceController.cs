@@ -65,6 +65,11 @@ public class UserInterfaceController : MonoBehaviour
         findPlayer();
         healthSliderHandler.updateUIBar();
     }
+
+    public int scoreCarrier()
+    {
+        return waveTextHandler.getCurrentScore();
+    }
 }
 
 /*
@@ -75,6 +80,7 @@ public class WaveScoreTextHandler
     private int currentWave;
     private int currentScore;
     private TextMeshProUGUI scoreWaveText;
+    public int testvalue = 19;
 
     public WaveScoreTextHandler(TextMeshProUGUI scoreWaveText, int currentWave, int currentScore)
     {
