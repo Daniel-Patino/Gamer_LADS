@@ -11,5 +11,11 @@ public class MainMenu : MonoBehaviour
         // https://www.youtube.com/watch?v=zc8ac_qUXQY 9:05
         // unity docs reccomend LoadSceneAsync over LoadScene.
     }
-    
+
+    public void EndGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting game...");
+    }
+
 }
