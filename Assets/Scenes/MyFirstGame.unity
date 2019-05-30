@@ -2675,8 +2675,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameOverDisplay: {fileID: 71922896}
   playerRespawnController: {fileID: 1774634029}
+  userInterfaceController: {fileID: 644198727}
   waveNumberText: {fileID: 1670142627}
   scoreNumberText: {fileID: 479867809}
+  test: 0
 --- !u!1 &1900780711
 GameObject:
   m_ObjectHideFlags: 0
