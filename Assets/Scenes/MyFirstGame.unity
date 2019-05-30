@@ -1457,6 +1457,7 @@ MonoBehaviour:
   startingBombs: 25
   startingScore: 0
   playerObject: {fileID: 795082650}
+  waveTextHandler: {fileID: 0}
 --- !u!4 &653168983 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5295707923915365419, guid: 2429956e74d14984bacafb3f978606fb,
@@ -2679,8 +2680,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameOverDisplay: {fileID: 71922896}
   playerRespawnController: {fileID: 1774634029}
+  gameController: {fileID: 644198724}
   waveNumberText: {fileID: 1670142627}
   scoreNumberText: {fileID: 479867809}
+  test: 0
 --- !u!1 &1900780711
 GameObject:
   m_ObjectHideFlags: 0
