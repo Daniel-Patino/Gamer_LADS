@@ -12,7 +12,7 @@ public class PowerUpShield : MonoBehaviour
         if (other.tag == "Player" && other.GetComponent<PlayerController>() != null)
         {
             shieldController = GameObject.Find("PlayerController");
-            shieldController.GetComponent<PlayerShieldController>().currentShieldLevel = shieldController.GetComponent<PlayerShieldController>().currentShieldLevel + shieldLevel;
+            shieldController.GetComponent<PlayerShieldController>().setCurrentShieldLevel(shieldLevel);
             shieldController.GetComponent<PlayerShieldController>().shieldUpdate();
         }
     }
