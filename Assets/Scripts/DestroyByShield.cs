@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestroyByShield : MonoBehaviour
 {
+    private MeteorSplitter meteorSplitter;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag != "Boundary")
@@ -11,6 +13,11 @@ public class DestroyByShield : MonoBehaviour
             if(other.tag != "Player")
             {
                 Destroy(this.gameObject);
+                if(other.gameObject.GetComponent<MeteorSplitter>() != null)
+                {
+                    other.gameObject.GetComponent<MeteorSplitter>().collideWithShield();
+                    Destroy(other.gameObject);
+                }
             }
         }
     }
