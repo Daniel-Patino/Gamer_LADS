@@ -21,7 +21,7 @@ public class DestroyByContact : MonoBehaviour
         {
             if (isPowerUp)
             {
-                if(other.tag == this.tag)
+                if(other.name == "Player")
                 {
                     Destroy(this.gameObject);
                 }

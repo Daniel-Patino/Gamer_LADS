@@ -69,7 +69,6 @@ public class MeteorSplitter : MonoBehaviour
      */
     private void OnDestroy()
     {
-        Debug.Log("Split: " + toSplit);
         if (!PauseGame.InGameState)
         {
             isQuitting = true;

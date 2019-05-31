@@ -8,26 +8,32 @@ public class PlayerShieldController : MonoBehaviour
     public int initialShieldLevel = 0;
     public GameObject[] shields;
 
+    private bool shieldActive = false;
+
     [HideInInspector] private int currentShieldLevel = 0;
 
     public void shieldUpdate()
     {
-        Debug.Log("Shield Initialized");
-        Debug.Log("Shield Level: " + currentShieldLevel);
-
         if(currentShieldLevel > shields.Length)
         {
-            Debug.Log("Warning: Shield Level is greater than array of Shields... Shield Value: " + currentShieldLevel);
-            Debug.Log("Setting Shield Level to largest size in array... Array Value: " + shields.Length);
             currentShieldLevel = shields.Length;
         }
-
+        if(currentShieldLevel <= 0) {
+            return;
+        }
+        Debug.Log("Value of Shield: " + currentShieldLevel);
+        Debug.Log("Shields");
         Instantiate(shields[currentShieldLevel - 1], playerObject.transform.position, Quaternion.Euler(90, 0, 0), playerObject.transform);
     }
 
-    private void shieldPowerUp()
+    public bool isShieldActive()
     {
-        Debug.Log("Shield Updating 123");
+        return shieldActive;
+    }
+
+    public void setShieldActive(bool isShieldActive)
+    {
+        shieldActive = isShieldActive;
     }
 
     public int getCurrentShieldLevel()
@@ -43,5 +49,10 @@ public class PlayerShieldController : MonoBehaviour
     public void incrementCurrentShieldLevel(int incrementValue)
     {
         currentShieldLevel += incrementValue;
+    }
+
+    public void decrementCurrentShieldLevel(int decrementValue)
+    {
+        currentShieldLevel -= decrementValue;
     }
 }
