@@ -5,7 +5,6 @@ using UnityEngine;
 public class PowerUpShield : MonoBehaviour
 {
     public int shieldLevel = 3;
-
     private GameObject shieldController;
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +12,7 @@ public class PowerUpShield : MonoBehaviour
         if (other.tag == "Player" && other.GetComponent<PlayerController>() != null)
         {
             shieldController = GameObject.Find("PlayerController");
-            shieldController.GetComponent<PlayerShieldController>().shieldLevel = shieldController.GetComponent<PlayerShieldController>().shieldLevel + shieldLevel;
+            shieldController.GetComponent<PlayerShieldController>().currentShieldLevel = shieldController.GetComponent<PlayerShieldController>().currentShieldLevel + shieldLevel;
             shieldController.GetComponent<PlayerShieldController>().shieldUpdate();
         }
     }

@@ -13,6 +13,7 @@ public class GameOverScreen : MonoBehaviour
     // inheriting MonoBehaviour has its own set of +/-. one is that it assumes attachment to GameObject.
     // public GameObject gameController;
     public UserInterfaceController userInterfaceController;
+    
     public GameObject waveNumberText;
     public GameObject scoreNumberText;
     public int test;
@@ -37,6 +38,7 @@ public class GameOverScreen : MonoBehaviour
         }
 
         testText = scoreNumberText.GetComponent<Text>();
+        // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
         // testText.text = gameController.GetComponent<UserInterfaceController>().scoreCarrier().ToString();
         testText.text = userInterfaceController.scoreCarrier().ToString();
 
