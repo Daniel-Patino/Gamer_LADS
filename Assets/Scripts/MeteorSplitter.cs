@@ -13,16 +13,10 @@ public class MeteorSplitter : MonoBehaviour
 
     private bool toSplit = false;
     private bool isQuitting = false;
-    private bool isShield = false;
 
     private void Awake()
     {
         isQuitting = false;
-    }
-
-    public void collideWithShield()
-    {
-        isShield = true;
     }
 
     /*
@@ -57,7 +51,7 @@ public class MeteorSplitter : MonoBehaviour
             {
                 toSplit = false;
             }
-            else // Contact with bullets or other
+            else
             {
                 toSplit = true;
             }
@@ -69,13 +63,12 @@ public class MeteorSplitter : MonoBehaviour
      */
     private void OnDestroy()
     {
-        Debug.Log("Split: " + toSplit);
         if (!PauseGame.InGameState)
         {
             isQuitting = true;
         }
 
-        if (toSplit && !isQuitting && !isShield)
+        if (toSplit && !isQuitting)
             spawnObjects();
     }
 

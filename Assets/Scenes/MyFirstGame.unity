@@ -143,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &71922897
 RectTransform:
   m_ObjectHideFlags: 0
@@ -507,10 +507,14 @@ Light:
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
 =======
   m_BoundingSphereOverride: {x: 0, y: -0.000037238293, z: 7.02e-43, w: -0.000037238293}
 >>>>>>> MM-05_29
+=======
+  m_BoundingSphereOverride: {x: 0, y: -0.000037238293, z: 7.02e-43, w: -0.000037238293}
+>>>>>>> parent of 0cc85a6... Shield working at a basic level
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1440,7 +1444,7 @@ MonoBehaviour:
   - {fileID: 2240700345185986599, guid: 4fc3192e704dd7548a25a5d8ef81fcab, type: 3}
   - {fileID: 7485327939271131795, guid: 5131da55a0a43be4391575d8b9d236bb, type: 3}
   spawnArea: {x: 5, y: 0, z: 8}
-  spawnCount: 5
+  spawnCount: 300
   spawnWait: 0.1
   startWait: 0.5
   spawnAngleOffset: 0
@@ -2462,6 +2466,7 @@ MonoBehaviour:
   - {fileID: 5295707923915365420, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
   - {fileID: 9045882609465456067, guid: fd00d3de6ff8e3548bdee50eee367e69, type: 3}
   - {fileID: 2041790997309282249, guid: fba42ddc37f868f4c9c476268a899a00, type: 3}
+  currentShieldLevel: 0
 --- !u!1 &1793034828
 GameObject:
   m_ObjectHideFlags: 0
