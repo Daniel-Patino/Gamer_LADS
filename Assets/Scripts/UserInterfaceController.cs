@@ -65,6 +65,11 @@ public class UserInterfaceController : MonoBehaviour
         findPlayer();
         healthSliderHandler.updateUIBar();
     }
+
+    public int scoreCarrier()
+    {
+        return waveTextHandler.getCurrentScore();
+    }
 }
 
 /*

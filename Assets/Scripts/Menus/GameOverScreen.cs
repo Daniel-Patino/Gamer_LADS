@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class GameOverScreen : MonoBehaviour
 
         // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
     }
+
+    private Text testText;
 
     private int wave;
     private int score;
