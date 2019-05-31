@@ -137,13 +137,14 @@ GameObject:
   - component: {fileID: 71922897}
   - component: {fileID: 71922899}
   - component: {fileID: 71922898}
+  - component: {fileID: 71922900}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &71922897
 RectTransform:
   m_ObjectHideFlags: 0
@@ -206,6 +207,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71922896}
   m_CullTransparentMesh: 0
+--- !u!95 &71922900
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71922896}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e66a395327f3c441809003f3450df55, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &93736939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,7 +1456,7 @@ MonoBehaviour:
   - {fileID: 2240700345185986599, guid: 4fc3192e704dd7548a25a5d8ef81fcab, type: 3}
   - {fileID: 7485327939271131795, guid: 5131da55a0a43be4391575d8b9d236bb, type: 3}
   spawnArea: {x: 5, y: 0, z: 8}
-  spawnCount: 5
+  spawnCount: 300
   spawnWait: 0.1
   startWait: 0.5
   spawnAngleOffset: 0
@@ -2457,7 +2477,6 @@ MonoBehaviour:
   - {fileID: 5295707923915365420, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
   - {fileID: 9045882609465456067, guid: fd00d3de6ff8e3548bdee50eee367e69, type: 3}
   - {fileID: 2041790997309282249, guid: fba42ddc37f868f4c9c476268a899a00, type: 3}
-  currentShieldLevel: 0
 --- !u!1 &1793034828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,7 +2788,7 @@ GameObject:
   - component: {fileID: 1952291198}
   - component: {fileID: 1952291197}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2837,7 +2856,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952291198}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1810505774}
+        m_MethodName: LoadMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1952291198
@@ -3538,6 +3568,21 @@ PrefabInstance:
         type: 3}
       propertyPath: moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360002566533312934, guid: 561d9eca7d1d0fe4ba489907eb19d9cc,
+        type: 3}
+      propertyPath: invulnerabilityTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360002566533312934, guid: 561d9eca7d1d0fe4ba489907eb19d9cc,
+        type: 3}
+      propertyPath: invulnerabilityOnDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360002566533312934, guid: 561d9eca7d1d0fe4ba489907eb19d9cc,
+        type: 3}
+      propertyPath: invulnerabilityFlash
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 561d9eca7d1d0fe4ba489907eb19d9cc, type: 3}

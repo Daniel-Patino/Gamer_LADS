@@ -28,6 +28,7 @@ public class GameOverScreen : MonoBehaviour
     {
         if (playerRespawnController.lives <= 0)
         {
+            Debug.Log("no lives remain");
             GameOverState = true;
         }
 
@@ -35,28 +36,36 @@ public class GameOverScreen : MonoBehaviour
         {
             GameOver();
         }
+        
+        // currently duplicated here for visualization purposes
+        scoreText = scoreNumberText.GetComponent<Text>();
+        scoreText.text = userInterfaceController.waveTextHandler.getCurrentScore().ToString();
 
-        testText = scoreNumberText.GetComponent<Text>();
-        // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
-        // testText.text = gameController.GetComponent<UserInterfaceController>().scoreCarrier().ToString();
-        testText.text = userInterfaceController.ScoreCarrier().ToString();
+        waveText = waveNumberText.GetComponent<Text>();
+        waveText.text = userInterfaceController.waveTextHandler.getCurrentWave().ToString();
 
-        // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
     }
 
-    private Text testText;
+    private Text scoreText;
+    private Text waveText;
 
     private int wave;
     private int score;
     private void GameOver()
     {
-        // waveText = waveScoreTextHandler.getCurrentScore;
-    
+        // currently duplicated in Update for visualization purposes
+        GameOverDisplay.SetActive(true);
+
+        scoreText = scoreNumberText.GetComponent<Text>();
+        scoreText.text = userInterfaceController.waveTextHandler.getCurrentScore().ToString();
+
+        waveText = waveNumberText.GetComponent<Text>();
+        waveText.text = userInterfaceController.waveTextHandler.getCurrentWave().ToString();
     }
     
-
     public void LoadMainMenu()
     {
+        Debug.Log("loading main menu");
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }
