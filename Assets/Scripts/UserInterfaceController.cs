@@ -66,7 +66,11 @@ public class UserInterfaceController : MonoBehaviour
         healthSliderHandler.updateUIBar();
     }
 
-    public int scoreCarrier()
+    /* call a method in waveTextHandler, an instance of class WaveScoreTextHandler.
+     * call method because can't call int; both "currentWave" and "currentScore" are private.
+     * works because said method is actually an int: "public int getCurrentScore()".
+     */
+    public int ScoreCarrier()
     {
         return waveTextHandler.getCurrentScore();
     }

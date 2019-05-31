@@ -39,7 +39,7 @@ public class GameOverScreen : MonoBehaviour
         testText = scoreNumberText.GetComponent<Text>();
         // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
         // testText.text = gameController.GetComponent<UserInterfaceController>().scoreCarrier().ToString();
-        testText.text = userInterfaceController.scoreCarrier().ToString();
+        testText.text = userInterfaceController.ScoreCarrier().ToString();
 
         // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
     }
