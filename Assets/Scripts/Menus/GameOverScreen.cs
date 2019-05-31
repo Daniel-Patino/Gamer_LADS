@@ -16,7 +16,6 @@ public class GameOverScreen : MonoBehaviour
     
     public GameObject waveNumberText;
     public GameObject scoreNumberText;
-    public int test;
 
     // Start is called before the first frame update
     void Awake()
@@ -45,19 +44,14 @@ public class GameOverScreen : MonoBehaviour
         // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
     }
 
-    private int wave;
-    private int score;
     private Text testText;
 
+    private int wave;
+    private int score;
     private void GameOver()
     {
-        // testText = waveNumberText.GetComponent<Text>();
-        // testText.text = waveScoreTextHandler.getCurrentScore().ToString();
-
-        ///= waveScoreTextHandler.getCurrentScore();
-
         // waveText = waveScoreTextHandler.getCurrentScore;
-        // waveNumberText.Text = waveScoreTextHandler.getCurrentScore();
+    
     }
     
 
