@@ -25,6 +25,10 @@ public class DestroyByContact : MonoBehaviour
                 {
                     Destroy(this.gameObject);
                 }
+                else
+                {
+                    return;
+                }
             }
 
             if (other.tag != this.tag)

@@ -12,20 +12,34 @@ public class DestroyByShield : MonoBehaviour
     {
         if(other.tag != "Boundary")
         {
-            if(other.tag != "Player")
-            {
-                playerController = GameObject.Find("PlayerController");
-                playerShieldController = playerController.GetComponent<PlayerShieldController>();
+            playerController = GameObject.Find("PlayerController");
+            playerShieldController = playerController.GetComponent<PlayerShieldController>();
+
+            if (other.tag != "Player")
+            {    
                 playerShieldController.decrementCurrentShieldLevel(1);
 
-                Debug.Log("Calling");
                 playerShieldController.shieldUpdate();
 
-                Destroy(this.gameObject);
-                if(other.gameObject.GetComponent<MeteorSplitter>() != null)
+                if (other.gameObject.GetComponent<MeteorSplitter>() != null)
                 {
                     other.gameObject.GetComponent<MeteorSplitter>().collideWithShield();
                     Destroy(other.gameObject);
+                }
+
+
+
+                Destroy(this.gameObject);
+
+            }
+            else
+            {
+                Debug.Log("Debug: " + playerShieldController.getCurrentShieldLevel() + " " + other.name);
+
+                if (playerShieldController.getCurrentShieldLevel() < 4 && other.name == "ShieldBoost (1)")
+                {
+                    Destroy(this.gameObject);
+                    Debug.Log("Already Has Shield");
                 }
             }
         }
