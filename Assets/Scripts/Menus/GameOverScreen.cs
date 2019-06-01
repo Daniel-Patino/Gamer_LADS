@@ -8,12 +8,13 @@ public class GameOverScreen : MonoBehaviour
 {
     public GameObject GameOverDisplay;
     public static bool GameOverState = false;
+
     public PlayerRespawnController playerRespawnController;
     // note: referencing class directly here requires inheriting from MonoBehaviour.
     // inheriting MonoBehaviour has its own set of +/-. one is that it assumes attachment to GameObject.
     // public GameObject gameController;
     public UserInterfaceController userInterfaceController;
-    
+    public GameObject userInterfacePanel;
     public GameObject waveNumberText;
     public GameObject scoreNumberText;
 
@@ -26,7 +27,7 @@ public class GameOverScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerRespawnController.lives <= 0)
+        if (playerRespawnController.livesRemaining <= 0)
         {
             GameOverState = true;
         }
@@ -35,28 +36,29 @@ public class GameOverScreen : MonoBehaviour
         {
             GameOver();
         }
-
-        testText = scoreNumberText.GetComponent<Text>();
-        // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
-        // testText.text = gameController.GetComponent<UserInterfaceController>().scoreCarrier().ToString();
-        testText.text = userInterfaceController.scoreCarrier().ToString();
-
-        // Debug.Log(gameController.GetComponent<UserInterfaceController>().scoreCarrier());
     }
 
-    private Text testText;
+    private Text scoreText;
+    private Text waveText;
 
     private int wave;
     private int score;
     private void GameOver()
     {
-        // waveText = waveScoreTextHandler.getCurrentScore;
-    
+        userInterfacePanel.SetActive(false);
+        // currently duplicated in Update for visualization purposes
+        GameOverDisplay.SetActive(true);
+
+        scoreText = scoreNumberText.GetComponent<Text>();
+        scoreText.text = userInterfaceController.waveTextHandler.getCurrentScore().ToString();
+
+        waveText = waveNumberText.GetComponent<Text>();
+        waveText.text = userInterfaceController.waveTextHandler.getCurrentWave().ToString();
     }
     
-
     public void LoadMainMenu()
     {
+        Debug.Log("loading main menu");
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }

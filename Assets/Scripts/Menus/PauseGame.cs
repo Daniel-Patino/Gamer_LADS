@@ -25,7 +25,6 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("1");
             if (PauseState == true)
             {
                 Resume();
