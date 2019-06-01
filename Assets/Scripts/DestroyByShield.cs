@@ -26,20 +26,13 @@ public class DestroyByShield : MonoBehaviour
                     other.gameObject.GetComponent<MeteorSplitter>().collideWithShield();
                     Destroy(other.gameObject);
                 }
-
-
-
                 Destroy(this.gameObject);
-
             }
             else
             {
-                Debug.Log("Debug: " + playerShieldController.getCurrentShieldLevel() + " " + other.name);
-
                 if (playerShieldController.getCurrentShieldLevel() < 4 && other.name == "ShieldBoost (1)")
                 {
                     Destroy(this.gameObject);
-                    Debug.Log("Already Has Shield");
                 }
             }
         }
