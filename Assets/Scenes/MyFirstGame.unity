@@ -1469,6 +1469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845a8ad3a4b1b51408258374b8c054ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userInterfacePanel: {fileID: 2043953202}
   startingWave: 1
   startingLives: 3
   startingBombs: 25
@@ -2453,7 +2454,7 @@ MonoBehaviour:
   playerObject: {fileID: 795082650}
   initialShieldLevel: 0
   shields:
-  - {fileID: 5295707923915365420, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
+  - {fileID: 513577551881033566, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
   - {fileID: 9045882609465456067, guid: fd00d3de6ff8e3548bdee50eee367e69, type: 3}
   - {fileID: 2041790997309282249, guid: fba42ddc37f868f4c9c476268a899a00, type: 3}
 --- !u!1 &1793034828
@@ -2678,6 +2679,7 @@ MonoBehaviour:
   GameOverDisplay: {fileID: 71922896}
   playerRespawnController: {fileID: 1774634029}
   userInterfaceController: {fileID: 644198727}
+  userInterfacePanel: {fileID: 2043953202}
   waveNumberText: {fileID: 1670142627}
   scoreNumberText: {fileID: 479867809}
 --- !u!1 &1900780711
