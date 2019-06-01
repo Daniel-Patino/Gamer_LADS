@@ -46,7 +46,6 @@ public class GameOverScreen : MonoBehaviour
     private void GameOver()
     {
         userInterfacePanel.SetActive(false);
-        // currently duplicated in Update for visualization purposes
         GameOverDisplay.SetActive(true);
 
         scoreText = scoreNumberText.GetComponent<Text>();
@@ -58,7 +57,6 @@ public class GameOverScreen : MonoBehaviour
     
     public void LoadMainMenu()
     {
-        Debug.Log("loading main menu");
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }
