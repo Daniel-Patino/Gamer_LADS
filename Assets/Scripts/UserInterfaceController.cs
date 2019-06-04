@@ -8,6 +8,8 @@ using TMPro;
  */ 
 public class UserInterfaceController : MonoBehaviour
 {
+    public GameObject userInterfacePanel;
+
     public int startingWave = 1;
     public int startingLives = 3;
     public int startingBombs = 3;
@@ -22,6 +24,11 @@ public class UserInterfaceController : MonoBehaviour
     public WaveScoreTextHandler waveTextHandler;
     private HealthSliderHandler healthSliderHandler;
     private BombsAmountHandler bombsAmountHandler;
+
+    void Awake()
+    {
+        userInterfacePanel.SetActive(true);
+    }
 
     private void getTheComponents()
     {

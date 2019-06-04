@@ -8,12 +8,13 @@ public class GameOverScreen : MonoBehaviour
 {
     public GameObject GameOverDisplay;
     public static bool GameOverState = false;
+
     public PlayerRespawnController playerRespawnController;
     // note: referencing class directly here requires inheriting from MonoBehaviour.
     // inheriting MonoBehaviour has its own set of +/-. one is that it assumes attachment to GameObject.
     // public GameObject gameController;
     public UserInterfaceController userInterfaceController;
-    
+    public GameObject userInterfacePanel;
     public GameObject waveNumberText;
     public GameObject scoreNumberText;
 
@@ -26,9 +27,8 @@ public class GameOverScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerRespawnController.lives <= 0)
+        if (playerRespawnController.livesRemaining <= 0)
         {
-            Debug.Log("no lives remain");
             GameOverState = true;
         }
 
@@ -36,14 +36,6 @@ public class GameOverScreen : MonoBehaviour
         {
             GameOver();
         }
-        
-        // currently duplicated here for visualization purposes
-        scoreText = scoreNumberText.GetComponent<Text>();
-        scoreText.text = userInterfaceController.waveTextHandler.getCurrentScore().ToString();
-
-        waveText = waveNumberText.GetComponent<Text>();
-        waveText.text = userInterfaceController.waveTextHandler.getCurrentWave().ToString();
-
     }
 
     private Text scoreText;
@@ -53,7 +45,7 @@ public class GameOverScreen : MonoBehaviour
     private int score;
     private void GameOver()
     {
-        // currently duplicated in Update for visualization purposes
+        userInterfacePanel.SetActive(false);
         GameOverDisplay.SetActive(true);
 
         scoreText = scoreNumberText.GetComponent<Text>();
@@ -65,7 +57,6 @@ public class GameOverScreen : MonoBehaviour
     
     public void LoadMainMenu()
     {
-        Debug.Log("loading main menu");
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }
