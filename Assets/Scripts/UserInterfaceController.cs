@@ -59,6 +59,20 @@ public class UserInterfaceController : MonoBehaviour
         return hasBombs;
     }
 
+    public void scoreMultiplier(int scoreMultiplier, float powerUpDuration)
+    {
+        StartCoroutine(activatedScoreMultiplier(scoreMultiplier, powerUpDuration));
+    }
+
+    IEnumerator activatedScoreMultiplier(int scoreMultiplier, float powerUpDuration)
+    {
+        Debug.Log("Score_Multiplier_Active");
+        waveTextHandler.setScoreMultiplier(scoreMultiplier);
+        yield return new WaitForSeconds(powerUpDuration);
+        Debug.Log("Score_Multiplier_Deactive");
+        waveTextHandler.setScoreMultiplier(1);
+    }
+
     void Start()
     {
         getTheComponents();
@@ -81,12 +95,17 @@ public class WaveScoreTextHandler
 {
     private int currentWave;
     private int currentScore;
+    private int scoreMultiplier = 1;
     private TextMeshProUGUI scoreWaveText;
 
     public WaveScoreTextHandler(TextMeshProUGUI scoreWaveText, int currentWave, int currentScore)
     {
         this.currentWave = currentWave;
         this.scoreWaveText = scoreWaveText;
+    }
+    public void addToCurrentScore(int scoreValue)
+    {
+        currentScore = currentScore + (scoreValue * scoreMultiplier);
     }
 
     public void setScoreWaveText()
@@ -111,7 +130,17 @@ public class WaveScoreTextHandler
 
     public void setCurrentScore(int newScore)
     {
-        currentScore = newScore;
+        currentScore = newScore * scoreMultiplier;
+    }
+
+    public void setScoreMultiplier(int newScoreMultiplier)
+    {
+        scoreMultiplier = newScoreMultiplier;
+    }
+
+    public float getScoreMultiplier()
+    {
+        return scoreMultiplier;
     }
 }
 

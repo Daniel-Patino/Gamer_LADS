@@ -24,9 +24,9 @@ public class IndividualScore : MonoBehaviour
                 {
                     unitsHealth = this.gameObject.GetComponent<IndividualHealth>();
                     if (unitsHealth.getCurrentHealth() - other.gameObject.GetComponent<DamageByContact>().damage < 1)
-                    {
+                    { 
                         int currentScore = scoreController.waveTextHandler.getCurrentScore();
-                        scoreController.waveTextHandler.setCurrentScore(currentScore + score);
+                        scoreController.waveTextHandler.addToCurrentScore(score);
                         scoreController.waveTextHandler.setScoreWaveText();
                     }
                 }
