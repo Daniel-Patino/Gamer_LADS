@@ -2453,7 +2453,7 @@ MonoBehaviour:
   playerObject: {fileID: 795082650}
   initialShieldLevel: 0
   shields:
-  - {fileID: 5295707923915365420, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
+  - {fileID: 513577551881033566, guid: 2429956e74d14984bacafb3f978606fb, type: 3}
   - {fileID: 9045882609465456067, guid: fd00d3de6ff8e3548bdee50eee367e69, type: 3}
   - {fileID: 2041790997309282249, guid: fba42ddc37f868f4c9c476268a899a00, type: 3}
 --- !u!1 &1793034828
