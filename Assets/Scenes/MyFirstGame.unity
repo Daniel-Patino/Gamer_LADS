@@ -855,6 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 212060132}
+  - component: {fileID: 212060133}
   m_Layer: 0
   m_Name: WavePattern
   m_TagString: Untagged
@@ -878,6 +879,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &212060133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212060131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c219795233173b4db6a29bf67b66cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointSet: []
+  Wave: {fileID: 1818110867}
+  test: 0
 --- !u!1 &252527232
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,6 +2064,7 @@ GameObject:
   - component: {fileID: 651975608}
   - component: {fileID: 651975607}
   - component: {fileID: 651975606}
+  - component: {fileID: 651975609}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -2149,6 +2166,20 @@ MonoBehaviour:
   invulnerabilityTime: 1
   invulnerabilityFlash: 0.5
   canRespawn: 0
+--- !u!114 &651975609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651975602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366431cd79ad86342b37bc876b7d75bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  wavePatternController: {fileID: 212060133}
 --- !u!1001 &753027010
 PrefabInstance:
   m_ObjectHideFlags: 0
