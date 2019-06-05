@@ -9,7 +9,6 @@ using TMPro;
 public class UserInterfaceController : MonoBehaviour
 {
     public GameObject userInterfacePanel;
-
     public int startingWave = 1;
     public int startingLives = 3;
     public int startingBombs = 3;
@@ -17,13 +16,18 @@ public class UserInterfaceController : MonoBehaviour
     public GameObject playerObject; // Health of Player is derived from it's IndividualHealth component
 
     private TextMeshProUGUI currentScoreWaveText;
+    private TextMeshProUGUI scoreBoost;
     private Slider currentHealthSlider;
     private RectTransform currentLives;
     private Image currentBombsAmount;
+    private GameObject scoreBoostGO;
 
     public WaveScoreTextHandler waveTextHandler;
     private HealthSliderHandler healthSliderHandler;
     private BombsAmountHandler bombsAmountHandler;
+    private ScoreBoostHandler scoreBoostHandler;
+
+    private float scoreBoostTimeLeft = 0f;
 
     void Awake()
     {
@@ -36,6 +40,8 @@ public class UserInterfaceController : MonoBehaviour
         currentHealthSlider = GameObject.Find("Health").GetComponent<Slider>();
         currentLives = GameObject.Find("Lives").GetComponent<RectTransform>();
         currentBombsAmount = GameObject.Find("Amount").GetComponentInChildren<Image>();
+        scoreBoost = GameObject.Find("ScoreBoostGUI").GetComponent<TextMeshProUGUI>();
+        // scoreBoostGO = GameObject.Find("ScoreBoostGUI");
     }
 
     private void findPlayer()
@@ -66,10 +72,13 @@ public class UserInterfaceController : MonoBehaviour
 
     IEnumerator activatedScoreMultiplier(int scoreMultiplier, float powerUpDuration)
     {
+        scoreBoostTimeLeft = scoreBoostTimeLeft + powerUpDuration;
         Debug.Log("Score_Multiplier_Active");
         waveTextHandler.setScoreMultiplier(scoreMultiplier);
+        scoreBoostHandler.activateText(powerUpDuration);
         yield return new WaitForSeconds(powerUpDuration);
         Debug.Log("Score_Multiplier_Deactive");
+        scoreBoostHandler.deactivateText();
         waveTextHandler.setScoreMultiplier(1);
     }
 
@@ -79,12 +88,17 @@ public class UserInterfaceController : MonoBehaviour
         waveTextHandler = new WaveScoreTextHandler(currentScoreWaveText, startingWave, startingScore);
         healthSliderHandler = new HealthSliderHandler(playerObject, currentHealthSlider);
         bombsAmountHandler = new BombsAmountHandler(startingBombs, currentBombsAmount);
+        scoreBoostHandler = new ScoreBoostHandler(scoreBoost);
     }
 
     void Update()
     {
         findPlayer();
         healthSliderHandler.updateUIBar();
+        if (scoreBoostHandler.isActive())
+        {
+            scoreBoostHandler.startScoreBoostTimer(scoreBoostTimeLeft);
+        }
     }
 }
 
@@ -214,5 +228,49 @@ public class BombsAmountHandler {
     public void updateBombCountSprite()
     {
         bombCountImage.sprite = Resources.Load<Sprite>("numeral" + bombsRemaining.ToString());
+    }
+}
+
+public class ScoreBoostHandler
+{
+    private int duration;
+    private TextMeshProUGUI scoreBoost;
+    private bool active;
+
+    public ScoreBoostHandler(TextMeshProUGUI scoreBoost)
+    {
+        this.scoreBoost = scoreBoost;
+    }
+
+    public void activateText(float timeLeft)
+    {
+        scoreBoost.SetText("SCORE BOOST ENABLED " + timeLeft);
+        active = true;
+    }
+
+    public void deactivateText()
+    {
+        scoreBoost.SetText("");
+        active = false;
+    }
+
+    public void startScoreBoostTimer(float timeLeft)
+    {
+        while (timeLeft > 0)
+        {
+            setText("Score Boost Enabled " + timeLeft);
+            timeLeft -= Time.deltaTime;
+        }
+            deactivateText();
+    }
+
+    public void setText(string text)
+    {
+        scoreBoost.SetText(text);
+    }
+
+    public bool isActive()
+    {
+        return active;
     }
 }
