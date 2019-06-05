@@ -12,9 +12,12 @@ public class MeteorSpawner : MonoBehaviour
     public float startWait;
     public int spawnAngleOffset = 0;
 
+    [HideInInspector] public int spawnCountRemaining;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawnCountRemaining = spawnCount;
         StartCoroutine(SpawnWaves());
     }
 
@@ -26,6 +29,9 @@ public class MeteorSpawner : MonoBehaviour
             Vector3 spawnPosition = new Vector3(Random.Range(-spawnArea.x, spawnArea.x), spawnArea.y, spawnArea.z);
             Quaternion spawnRotation = Quaternion.Euler(90, 0, Random.Range(180, 180));
             Instantiate(meteorHazard[Random.Range(0, meteorHazard.Length)], spawnPosition, spawnRotation);
+
+            spawnCountRemaining--;
+
             yield return new WaitForSeconds(spawnWait);
         }
     }

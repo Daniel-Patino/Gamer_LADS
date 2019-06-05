@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 2f;
     public WavePatternController wavePatternController;
 
     private Transform currentWaypoint;
     private int WaypointIndex = 0;
     
-    void Awake()
+    void Start()
     {
         currentWaypoint = wavePatternController.waypointSet[0];
     }
