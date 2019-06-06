@@ -2283,11 +2283,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c219795233173b4db6a29bf67b66cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypointSet: []
-  Wave: {fileID: 1818110867}
+  WaveContainer: {fileID: 212060131}
   userInterfaceController: {fileID: 644198727}
   meteorSpawner: {fileID: 644198726}
   startWait: 5
+  waypointSet: []
 --- !u!1 &795082650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8360002566533312929, guid: 561d9eca7d1d0fe4ba489907eb19d9cc,
@@ -2634,6 +2634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121086953}
+  - component: {fileID: 1121086954}
   m_Layer: 0
   m_Name: WavePattern2
   m_TagString: Untagged
@@ -2662,6 +2663,19 @@ Transform:
   m_Father: {fileID: 212060132}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121086954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121086952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e2634b2aedb394f82f4ffa357b66e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCount: 5
 --- !u!1 &1121762023
 GameObject:
   m_ObjectHideFlags: 0
