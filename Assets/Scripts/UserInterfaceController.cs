@@ -68,6 +68,7 @@ public class UserInterfaceController : MonoBehaviour
     public void scoreMultiplier(int scoreMultiplier, float powerUpDuration)
     {
         StartCoroutine(activatedScoreMultiplier(scoreMultiplier, powerUpDuration));
+        StartCoroutine(scoreBoostHandler.startScoreBoostTimer(powerUpDuration));
     }
 
     IEnumerator activatedScoreMultiplier(int scoreMultiplier, float powerUpDuration)
@@ -251,15 +252,17 @@ public class ScoreBoostHandler
     public void deactivateText()
     {
         scoreBoost.SetText("");
+        scoreBoost.GetComponentInParent<Animator>().SetBool("active", true);
         active = false;
     }
 
-    public void startScoreBoostTimer(float timeLeft)
+    public IEnumerator startScoreBoostTimer(float timeLeft)
     {
-        while (timeLeft > 0)
+        while (timeLeft > 0 && active == true)
         {
-            setText("Score Boost Enabled " + timeLeft);
-            timeLeft -= Time.deltaTime;
+            timeLeft -= 1;
+            setText("SCORE BOOST ENABLED " + timeLeft);
+            yield return new WaitForSeconds(1);
         }
             deactivateText();
     }
