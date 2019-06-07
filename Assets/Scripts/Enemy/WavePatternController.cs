@@ -63,7 +63,6 @@ public class WavePatternController : MonoBehaviour
 
     private float interimTimer;
     
-
     void WaveControlMainMethod()
     {
         // initial freedom from enemies
@@ -100,22 +99,24 @@ public class WavePatternController : MonoBehaviour
 
 }
 
-// why cant i call this private
 public class WaveReader
 {
+    // source
+    private GameObject waveContainer;
+    // number of waves in this scene
     public int wavesTotal;
+    // array, enemies on each given wave
     public Component[] enemyCountCarrier;
     public int[] enemiesEachWave;
-    private GameObject waveContainer;
-
-    // this is a constructor. note there's no type (e.g. void).
+    
+    // this is (also) a constructor. note there's no type (e.g. void).
     // when public and same name as class, allows passing of inputs.   
     public WaveReader(GameObject waveContainer)
     {
         this.waveContainer = waveContainer;
     }
-
-    public void test()
+    
+    public void stuffThatWorks()
     {
         // get number of waves
         wavesTotal = waveContainer.transform.childCount;
@@ -123,17 +124,67 @@ public class WaveReader
         // get number of enemies on each wave
         enemyCountCarrier = waveContainer.GetComponentsInChildren(typeof(EnemyCount), true);
         enemiesEachWave = new int[enemyCountCarrier.Length];
-        for (int i = 0; i<enemyCountCarrier.Length; i++)
+        for (int i = 0; i < enemyCountCarrier.Length; i++)
         {
-            // Debug.Log(enemyCountCarrier[i]);
             enemiesEachWave[i] = enemyCountCarrier[i].GetComponent<EnemyCount>().enemyCount;
-            Debug.Log(enemiesEachWave[i]);
+            // Debug.Log(enemiesEachWave[i]);
         }
-            
+    }
 
+    private Transform[] testRead;
+    private Transform[] testR2;
+    private Transform[] testR3;
+    private int currentWaypointCount;
+    private Transform[] waypointSet;
+    private bool activate = true;
+    private int currentWave = 0;
+    private int currentWaveLength;
 
-
-
+    public void test()
+    {
         // get transforms for each wave's points
+
+        /*
+            * get children of child [i]
+            * - count how many
+            * - getcomponent transform, stick them in a Vector3 array
+            */
+
+        // can't stick constructor inside a loop
+        // waypointSet = new Transform[waveContainer.transform.GetChild(0).childCount];
+
+        /*
+        * array: lengths of waves
+        * loop: assign new length of array, then assign transforms to each position
+        * 
+        * this could maybe be simplified with a matrix, but i don't want to do matrices.
+        */
+
+        waypointSet = new Transform[currentWaveLength]; // <--- this is where i left off
+
+        //untested
+        if(activate == true)
+        {
+            currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount;
+            // Debug.Log(currentWaveLength);
+            // waypointSet = 
+            for (int i = 0; i < currentWaveLength; i++)
+            {
+                // waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
+                Debug.Log("position " + i + " filled");
+            }
+            currentWave++;
+            activate = false;
+        }
+        
+        // constructor must occur inside of a method
+        // --- this stuff works ---
+        // testRead = new Transform[2];
+        // testRead[0] = waveContainer.transform.GetChild(0).GetChild(0).transform;
+        // testRead[1] = waveContainer.transform.GetChild(1).GetChild(1).transform;
+        // if (testRead[1] != null)
+        // {
+        //     Debug.Log("apparently transform has been read.");
+        // }
     }
 }
