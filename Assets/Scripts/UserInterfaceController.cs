@@ -245,6 +245,7 @@ public class ScoreBoostHandler
 
     public void activateText(float timeLeft)
     {
+        scoreBoost.GetComponentInParent<Animator>().SetBool("active", true);
         scoreBoost.SetText("SCORE BOOST ENABLED " + timeLeft);
         active = true;
     }
@@ -252,7 +253,6 @@ public class ScoreBoostHandler
     public void deactivateText()
     {
         scoreBoost.SetText("");
-        scoreBoost.GetComponentInParent<Animator>().SetBool("active", true);
         active = false;
     }
 
