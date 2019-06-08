@@ -35,13 +35,13 @@ public class WavePatternController : MonoBehaviour
 
         // reader/writer of waves
         waveReader = new WaveReader(WaveContainer);
-        waveReader.test();
+        waveReader.Awake();
+        waveReader.stuffThatWorks2();
 
 
         //--- TEMP TEST ---
 
         // set up first wave stuff
-
         initialGrace = true;
         
     }
@@ -101,22 +101,22 @@ public class WavePatternController : MonoBehaviour
 
 public class WaveReader
 {
-    // source
+    // primary source
     private GameObject waveContainer;
-    // number of waves in this scene
-    public int wavesTotal;
-    // array, enemies on each given wave
+    // intermediate source
     public Component[] enemyCountCarrier;
-    public int[] enemiesEachWave;
-    
     // this is (also) a constructor. note there's no type (e.g. void).
     // when public and same name as class, allows passing of inputs.   
     public WaveReader(GameObject waveContainer)
     {
         this.waveContainer = waveContainer;
     }
+
+    // main
+    public int wavesTotal; // number of waves in this scene
+    public int[] enemiesEachWave; // array, enemies on each given wave
     
-    public void stuffThatWorks()
+    public void Awake()
     {
         // get number of waves
         wavesTotal = waveContainer.transform.childCount;
@@ -127,64 +127,44 @@ public class WaveReader
         for (int i = 0; i < enemyCountCarrier.Length; i++)
         {
             enemiesEachWave[i] = enemyCountCarrier[i].GetComponent<EnemyCount>().enemyCount;
-            // Debug.Log(enemiesEachWave[i]);
         }
     }
 
-    private Transform[] testRead;
-    private Transform[] testR2;
-    private Transform[] testR3;
     private int currentWaypointCount;
     private Transform[] waypointSet;
     private bool activate = true;
     private int currentWave = 0;
     private int currentWaveLength;
+    private int wavesLeft;
+
+    public void stuffThatWorks2()
+    {
+        wavesLeft = wavesTotal;
+        while (wavesLeft > 0) // currently here. <----------
+                              // to do: control when next waypoint set is written. 
+                              // i don't think this 'while' actually adds anything, can do just 'if'.
+        {
+            if (activate == true)
+            {   
+                currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount; // find array length
+                waypointSet = new Transform[currentWaveLength]; // assign array length
+                for (int i = 0; i < currentWaveLength; i++)
+                {
+                    // assign transforms to array
+                    waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
+                    Debug.Log("position " + i + " filled");
+                }
+                currentWave++; // move reader to next position
+                activate = false;
+                Debug.Log("reading complete.");
+            }
+            wavesLeft--;
+            Debug.Log("wave read.");
+        }
+    }
 
     public void test()
     {
-        // get transforms for each wave's points
-
-        /*
-            * get children of child [i]
-            * - count how many
-            * - getcomponent transform, stick them in a Vector3 array
-            */
-
-        // can't stick constructor inside a loop
-        // waypointSet = new Transform[waveContainer.transform.GetChild(0).childCount];
-
-        /*
-        * array: lengths of waves
-        * loop: assign new length of array, then assign transforms to each position
-        * 
-        * this could maybe be simplified with a matrix, but i don't want to do matrices.
-        */
-
-        waypointSet = new Transform[currentWaveLength]; // <--- this is where i left off
-
-        //untested
-        if(activate == true)
-        {
-            currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount;
-            // Debug.Log(currentWaveLength);
-            // waypointSet = 
-            for (int i = 0; i < currentWaveLength; i++)
-            {
-                // waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
-                Debug.Log("position " + i + " filled");
-            }
-            currentWave++;
-            activate = false;
-        }
-        
-        // constructor must occur inside of a method
-        // --- this stuff works ---
-        // testRead = new Transform[2];
-        // testRead[0] = waveContainer.transform.GetChild(0).GetChild(0).transform;
-        // testRead[1] = waveContainer.transform.GetChild(1).GetChild(1).transform;
-        // if (testRead[1] != null)
-        // {
-        //     Debug.Log("apparently transform has been read.");
-        // }
+        activate = true;
     }
 }
