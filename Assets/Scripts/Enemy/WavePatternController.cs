@@ -25,7 +25,7 @@ public class WavePatternController : MonoBehaviour
 
     void Awake()
     {
-        //--- TEMP TEST ---
+        //--- TEMP TEST AREA ---
         // waypoint objects to array
         // waypointSet = new Transform[Wave.transform.childCount];
         // for (int i = 0; i < waypointSet.Length; i++)
@@ -39,7 +39,7 @@ public class WavePatternController : MonoBehaviour
         waveReader.stuffThatWorks2();
 
 
-        //--- TEMP TEST ---
+        //--- TEMP TEST AREA ---
 
         // set up first wave stuff
         initialGrace = true;
@@ -59,6 +59,8 @@ public class WavePatternController : MonoBehaviour
     void Update()
     {
         float timeElapsed = Time.timeSinceLevelLoad;        
+        // currentScore = userInterfaceController.somethingsomething
+        // scoreInterval = currentScore - scoreWhenPrevWaveSpawned
     }
 
     private float interimTimer;
@@ -78,16 +80,14 @@ public class WavePatternController : MonoBehaviour
         // wouldnt it be interesting if you could have two waves at once
         // i guess i should make one work first
 
-        // while (meteorRemainCount > 0)
+        // while (meteorRemainCount > 0 && waveRemainCount > 0)
         // {
-        //     while (waveRemainCount > 0)
-        //     {
-        //         if (scoreInterval > 100 && currentEnemyCount = 0)
-        //         {
-        //             // begin wave spawn
-        //             // scoreInterval = 0
-        //         }
-        //     }
+        //      if (scoreInterval > 100 && currentEnemyCount = 0)
+        //      {
+                    // wavereader pulls waypoint transforms for current wave
+        //          // wavespawner call
+        //          // scoreWhenPrevWaveSpawned = currentScore
+        //      }
         // }
 
     }
@@ -116,6 +116,7 @@ public class WaveReader
     public int wavesTotal; // number of waves in this scene
     public int[] enemiesEachWave; // array, enemies on each given wave
     
+    // initial read. run once.
     public void Awake()
     {
         // get number of waves
@@ -137,10 +138,11 @@ public class WaveReader
     private int currentWaveLength;
     private int wavesLeft;
 
+    // writes current waypoint set to be read by spawner
     public void stuffThatWorks2()
     {
         wavesLeft = wavesTotal;
-        while (wavesLeft > 0) // currently here. <----------
+        while (wavesLeft > 0) // currently here (1/2) <----------
                               // to do: control when next waypoint set is written. 
                               // i don't think this 'while' actually adds anything, can do just 'if'.
         {
@@ -152,14 +154,11 @@ public class WaveReader
                 {
                     // assign transforms to array
                     waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
-                    Debug.Log("position " + i + " filled");
                 }
                 currentWave++; // move reader to next position
                 activate = false;
-                Debug.Log("reading complete.");
             }
             wavesLeft--;
-            Debug.Log("wave read.");
         }
     }
 
@@ -167,4 +166,18 @@ public class WaveReader
     {
         activate = true;
     }
+}
+
+public class WaveSpawner
+{
+    // currently here (2/2) <----------
+    // private enemies left
+    // enemies left = current enemy count
+    /* while enemies left > 0 && timeElapsedSinceLastEnemy > 5
+     *      spawn enemy
+     *      
+     *      timeElapsedSinceLastEnemy = 0
+     *      enemies--
+     * 
+     */
 }
