@@ -35,8 +35,11 @@ public class WavePatternController : MonoBehaviour
 
         // reader/writer of waves
         waveReader = new WaveReader(WaveContainer);
-        waveReader.Awake();
-        waveReader.stuffThatWorks2();
+        waveReader.InitialSetup();
+
+
+
+        waveReader.WavePointSetter();
 
 
         //--- TEMP TEST AREA ---
@@ -117,7 +120,7 @@ public class WaveReader
     public int[] enemiesEachWave; // array, enemies on each given wave
     
     // initial read. run once.
-    public void Awake()
+    public void InitialSetup()
     {
         // get number of waves
         wavesTotal = waveContainer.transform.childCount;
@@ -139,7 +142,7 @@ public class WaveReader
     private int wavesLeft;
 
     // writes current waypoint set to be read by spawner
-    public void stuffThatWorks2()
+    public void WavePointSetter()
     {
         wavesLeft = wavesTotal;
         while (wavesLeft > 0) // currently here (1/2) <----------
