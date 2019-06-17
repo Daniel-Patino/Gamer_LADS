@@ -6,6 +6,7 @@ public class WavePatternController : MonoBehaviour
 {
     // Unsorted Active
     public GameObject WaveContainer;
+    private GameObject WavePattern;
     private WaveReader waveReader;
 
     // Unsorted Leftovers
@@ -13,6 +14,9 @@ public class WavePatternController : MonoBehaviour
     // Readers
     public UserInterfaceController userInterfaceController;
     private int currentScore;
+    private int prevWaveSpawnScore;
+    private int scoreInterval;
+    public int scoreToSpawnNextWave;
     public MeteorSpawner meteorSpawner;
     private int meteorRemainCount;
 
@@ -25,28 +29,24 @@ public class WavePatternController : MonoBehaviour
 
     void Awake()
     {
-        //--- TEMP TEST AREA ---
-        // waypoint objects to array
-        // waypointSet = new Transform[Wave.transform.childCount];
-        // for (int i = 0; i < waypointSet.Length; i++)
-        // {
-        //     waypointSet[i] = Wave.transform.GetChild(i);
-        // }
-
         // reader/writer of waves
         waveReader = new WaveReader(WaveContainer);
         waveReader.InitialSetup();
 
+        // reset waves to initial state: only first child active
+        if (WaveContainer.transform.childCount != 0)
+        {
+            for (int i = 0; i < waveReader.wavesTotal; i++)
+            {
+                WaveContainer.transform.GetChild(i).gameObject.SetActive(false);
+            }
+            WaveContainer.transform.GetChild(0).gameObject.SetActive(true);
+        }
 
-
-        waveReader.WavePointSetter();
-
-
-        //--- TEMP TEST AREA ---
+        waveReader.WavePointSetter(); // this should probably be moved somewhere else
 
         // set up first wave stuff
         initialGrace = true;
-        
     }
 
     /* initial timer disable everything
@@ -61,9 +61,11 @@ public class WavePatternController : MonoBehaviour
 
     void Update()
     {
-        float timeElapsed = Time.timeSinceLevelLoad;        
-        // currentScore = userInterfaceController.somethingsomething
-        // scoreInterval = currentScore - scoreWhenPrevWaveSpawned
+        float timeElapsed = Time.timeSinceLevelLoad;
+        meteorRemainCount = meteorSpawner.spawnCountRemaining;
+
+        currentScore = userInterfaceController.waveTextHandler.getCurrentScore();
+        scoreInterval = currentScore - prevWaveSpawnScore;
     }
 
     private float interimTimer;
@@ -79,19 +81,19 @@ public class WavePatternController : MonoBehaviour
                 initialGrace = false;
             }
         }
-
+        
         // wouldnt it be interesting if you could have two waves at once
         // i guess i should make one work first
 
-        // while (meteorRemainCount > 0 && waveRemainCount > 0)
-        // {
-        //      if (scoreInterval > 100 && currentEnemyCount = 0)
-        //      {
-                    // wavereader pulls waypoint transforms for current wave
-        //          // wavespawner call
-        //          // scoreWhenPrevWaveSpawned = currentScore
-        //      }
-        // }
+        while (meteorRemainCount > 0 && waveReader.wavesLeft > 0)
+        {
+            // if (scoreInterval > scoreToSpawnNextWave && currentEnemyCount = 0)
+            // {
+            //     // wavereader pulls waypoint transforms for current wave
+            //     // wavespawner call
+            //     // scoreWhenPrevWaveSpawned = currentScore
+            // }
+        }
 
     }
     
@@ -124,7 +126,8 @@ public class WaveReader
     {
         // get number of waves
         wavesTotal = waveContainer.transform.childCount;
-
+        // set counter for remaining waves
+        wavesLeft = wavesTotal;
         // get number of enemies on each wave
         enemyCountCarrier = waveContainer.GetComponentsInChildren(typeof(EnemyCount), true);
         enemiesEachWave = new int[enemyCountCarrier.Length];
@@ -132,19 +135,20 @@ public class WaveReader
         {
             enemiesEachWave[i] = enemyCountCarrier[i].GetComponent<EnemyCount>().enemyCount;
         }
+        // starter for WavePointSetter
+        activate = true;
     }
 
     private int currentWaypointCount;
     private Transform[] waypointSet;
-    private bool activate = true;
+    public bool activate = true;
     private int currentWave = 0;
     private int currentWaveLength;
-    private int wavesLeft;
+    public int wavesLeft;
 
     // writes current waypoint set to be read by spawner
     public void WavePointSetter()
     {
-        wavesLeft = wavesTotal;
         while (wavesLeft > 0) // currently here (1/2) <----------
                               // to do: control when next waypoint set is written. 
                               // i don't think this 'while' actually adds anything, can do just 'if'.
@@ -173,6 +177,7 @@ public class WaveReader
 
 public class WaveSpawner
 {
+    public int currentEnemyCount;
     // currently here (2/2) <----------
     // private enemies left
     // enemies left = current enemy count
