@@ -8,6 +8,7 @@ public class WavePatternController : MonoBehaviour
     public GameObject WaveContainer;
     private GameObject WavePattern;
     private WaveReader waveReader;
+    private WaveSpawner waveSpawner;
 
     // Unsorted Leftovers
 
@@ -16,7 +17,7 @@ public class WavePatternController : MonoBehaviour
     private int currentScore;
     private int prevWaveSpawnScore;
     private int scoreInterval;
-    public int scoreToSpawnNextWave;
+    public int scoreIntToSpawnNextWave;
     public MeteorSpawner meteorSpawner;
     private int meteorRemainCount;
 
@@ -29,9 +30,10 @@ public class WavePatternController : MonoBehaviour
 
     void Awake()
     {
-        // reader/writer of waves
+        // connecting the classes
         waveReader = new WaveReader(WaveContainer);
         waveReader.InitialSetup();
+        waveSpawner = new WaveSpawner();
 
         // reset waves to initial state: only first child active
         if (WaveContainer.transform.childCount != 0)
@@ -66,12 +68,41 @@ public class WavePatternController : MonoBehaviour
 
         currentScore = userInterfaceController.waveTextHandler.getCurrentScore();
         scoreInterval = currentScore - prevWaveSpawnScore;
+
+        // initial grace period
+        if (initialGrace == true && timeElapsed > startWait)
+        {
+            initialGrace = false;
+        }
+
+        // main executor
+        // statements ordered descending most likely to fail
+        if (initialGrace == false)
+        {
+            if (scoreInterval > scoreIntToSpawnNextWave)
+            {
+                if (meteorRemainCount > 0 && waveReader.wavesLeft > 0
+                    && waveSpawner.getCurrentEnemyCount() == 0)
+                {
+                    // reset time when enemies last spawned
+                    prevWaveSpawnScore = currentScore; // reset score interval
+
+                    // waveReader
+                    // waveSpawner
+                }
+
+            }
+        }
+
     }
 
+    // empty
     private float interimTimer;
-    
     void WaveControlMainMethod()
     {
+        // ---> apparently whiles don't work this way. or something to do with time. or something.
+        // whiles aren't coroutines is maybe the way to phrase it.
+
         // initial freedom from enemies
         // this implementation is called a "flag".
         while (initialGrace == true)
@@ -85,18 +116,18 @@ public class WavePatternController : MonoBehaviour
         // wouldnt it be interesting if you could have two waves at once
         // i guess i should make one work first
 
-        while (meteorRemainCount > 0 && waveReader.wavesLeft > 0)
-        {
-            // if (scoreInterval > scoreToSpawnNextWave && currentEnemyCount = 0)
-            // {
-            //     // wavereader pulls waypoint transforms for current wave
-            //     // wavespawner call
-            //     // scoreWhenPrevWaveSpawned = currentScore
-            // }
-        }
+        // while (meteorRemainCount > 0 && waveReader.wavesLeft > 0)
+        // {
+        //     Debug.Log("test");
+        //     // if (scoreInterval > scoreIntToSpawnNextWave && currentEnemyCount = 0)
+        //     // {
+        //     //     // wavereader pulls waypoint transforms for current wave
+        //     //     // wavespawner call
+        //     //     // scoreWhenPrevWaveSpawned = currentScore
+        //     // }
+        // }
 
     }
-    
     IEnumerator Placeholder()
     {
         yield return new WaitForSeconds(0);
@@ -177,7 +208,12 @@ public class WaveReader
 
 public class WaveSpawner
 {
-    public int currentEnemyCount;
+    private int currentEnemyCount;
+
+    public int getCurrentEnemyCount()
+    {
+        return currentEnemyCount;
+    }
     // currently here (2/2) <----------
     // private enemies left
     // enemies left = current enemy count

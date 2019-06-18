@@ -2285,6 +2285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaveContainer: {fileID: 212060131}
   userInterfaceController: {fileID: 644198727}
+  scoreIntToSpawnNextWave: 0
   meteorSpawner: {fileID: 644198726}
   startWait: 5
   waypointSet: []
