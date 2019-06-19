@@ -10,23 +10,24 @@ public class WavePatternController : MonoBehaviour
     private WaveReader waveReader;
     private WaveSpawner waveSpawner;
 
-    // Unsorted Leftovers
-
     // Readers
     public UserInterfaceController userInterfaceController;
     private int currentScore;
     private int prevWaveSpawnScore;
-    private int scoreInterval;
     public int scoreIntToSpawnNextWave;
     public MeteorSpawner meteorSpawner;
     private int meteorRemainCount;
 
     // Balance Variables
     public float startWait = 5f;
+    public float waveWait = 5f;
 
     // Internal Use
-    bool initialGrace = true;
+    private bool initialGrace = true;
     public Transform[] waypointSet;
+        // the above is currently called by EnemeyMovement.
+        // it has been moved to a getter under WaveReader.
+    private float timeSincePreviousWaveBegan = 0;
 
     void Awake()
     {
@@ -51,8 +52,8 @@ public class WavePatternController : MonoBehaviour
         initialGrace = true;
 
         // TEST AREA
-        int currentWave = waveReader.getCurrentWave();
-        waveReader.getWaveEnemyCount(currentWave, waveReader.enemiesEachWave);
+        StartCoroutine(NewWaveSpawner());
+        Debug.Log("does this line appear at 0 or 3s?"); // it appears at 0s.
     }
 
     /* initial timer disable everything
@@ -71,7 +72,8 @@ public class WavePatternController : MonoBehaviour
         meteorRemainCount = meteorSpawner.spawnCountRemaining;
 
         currentScore = userInterfaceController.waveTextHandler.getCurrentScore();
-        scoreInterval = currentScore - prevWaveSpawnScore;
+        int scoreInterval = currentScore - prevWaveSpawnScore;
+        float timeInterval = timeSincePreviousWaveBegan - timeElapsed;
 
         // initial grace period
         if (initialGrace == true && timeElapsed > startWait)
@@ -85,19 +87,44 @@ public class WavePatternController : MonoBehaviour
         {
             if (scoreInterval > scoreIntToSpawnNextWave)
             {
-                if (meteorRemainCount > 0 && waveReader.wavesLeft > 0
-                    && waveSpawner.getCurrentEnemyCount() == 0)
+                if (meteorRemainCount > 0
+                    && waveReader.wavesLeft > 0
+                    && waveSpawner.getCurrentEnemyCount() == 0
+                    && timeInterval > waveWait)
                 {
-                    // reset time when enemies last spawned
+                    timeSincePreviousWaveBegan = timeElapsed;
                     prevWaveSpawnScore = currentScore; // reset score interval
 
-                    // waveReader
+                    // waveReader.WavePointSetter
                     // waveSpawner
+                    // waveReader.setNextWave
+                        /*
+                         * wavespawner is now coroutine.
+                         * lines after coroutine call begin after coroutine is called (not when finished).
+                         * this means next-wave type things either
+                         *  - need to happen inside the coroutine, at the end, or
+                         *  - coroutine needs its own read-only dataset.
+                         * latter sounds better.
+                         */
                 }
 
             }
         }
 
+    }
+
+    //
+    IEnumerator NewWaveSpawner()
+    {
+        Debug.Log("ienumerator start.");
+        yield return new WaitForSeconds(3); // initial wait
+        Debug.Log("ienumerator end after designated 3 seconds");
+
+        for (int i = 0; i < 5; i++)
+        {
+        
+            yield return new WaitForSeconds(0); // interval wait
+        }
     }
 
     // empty
@@ -189,14 +216,9 @@ public class WaveReader
         currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount; // findarraylength
         waypointSet = new Transform[currentWaveLength]; // assign array length
         for (int i = 0; i < currentWaveLength; i++)
-        {
-            // assign transforms to array
+        {   // assign transforms to array
             waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
         }
-        currentWave++; // move reader to next position
-        activate = false;
-
-        wavesLeft--;
     }
 
     // getters and setters
@@ -206,9 +228,17 @@ public class WaveReader
     }
     public int getWaveEnemyCount(int currentWave, int[] enemiesEachWave)
     {
-        Debug.Log("current wave: " + currentWave);
-        Debug.Log("enemies in this wave " + enemiesEachWave[currentWave]);
         return enemiesEachWave[currentWave];
+    }
+    public Transform[] getWaypointSet()
+    {
+        return waypointSet;
+    }
+    public void setNextWave()
+    {
+        currentWave++;
+        wavesLeft--;
+        activate = false;
     }
 }
 
@@ -220,14 +250,14 @@ public class WaveSpawner
     {
         return currentEnemyCount;
     }
-    // currently here (2/2) <----------
-    // private enemies left
-    // enemies left = current enemy count
-    /* while enemies left > 0 && timeElapsedSinceLastEnemy > 5
+    // currently here <----------
+    /* enemies left = current enemy count
      *      spawn enemy
      *      
      *      timeElapsedSinceLastEnemy = 0
      *      enemies--
      * 
      */
+
+    // i think using ienumerator is probably unavoidable here...
 }
