@@ -49,6 +49,10 @@ public class WavePatternController : MonoBehaviour
 
         // set up first wave stuff
         initialGrace = true;
+
+        // TEST AREA
+        int currentWave = waveReader.getCurrentWave();
+        waveReader.getWaveEnemyCount(currentWave, waveReader.enemiesEachWave);
     }
 
     /* initial timer disable everything
@@ -166,8 +170,10 @@ public class WaveReader
         {
             enemiesEachWave[i] = enemyCountCarrier[i].GetComponent<EnemyCount>().enemyCount;
         }
-        // starter for WavePointSetter
+
+        // reset
         activate = true;
+        currentWave = 0;
     }
 
     private int currentWaypointCount;
@@ -180,29 +186,29 @@ public class WaveReader
     // writes current waypoint set to be read by spawner
     public void WavePointSetter()
     {
-        while (wavesLeft > 0) // currently here (1/2) <----------
-                              // to do: control when next waypoint set is written. 
-                              // i don't think this 'while' actually adds anything, can do just 'if'.
+        currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount; // findarraylength
+        waypointSet = new Transform[currentWaveLength]; // assign array length
+        for (int i = 0; i < currentWaveLength; i++)
         {
-            if (activate == true)
-            {   
-                currentWaveLength = waveContainer.transform.GetChild(currentWave).childCount; // find array length
-                waypointSet = new Transform[currentWaveLength]; // assign array length
-                for (int i = 0; i < currentWaveLength; i++)
-                {
-                    // assign transforms to array
-                    waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
-                }
-                currentWave++; // move reader to next position
-                activate = false;
-            }
-            wavesLeft--;
+            // assign transforms to array
+            waypointSet[i] = waveContainer.transform.GetChild(currentWave).GetChild(i).transform;
         }
+        currentWave++; // move reader to next position
+        activate = false;
+
+        wavesLeft--;
     }
 
-    public void test()
+    // getters and setters
+    public int getCurrentWave()
     {
-        activate = true;
+        return currentWave;
+    }
+    public int getWaveEnemyCount(int currentWave, int[] enemiesEachWave)
+    {
+        Debug.Log("current wave: " + currentWave);
+        Debug.Log("enemies in this wave " + enemiesEachWave[currentWave]);
+        return enemiesEachWave[currentWave];
     }
 }
 
