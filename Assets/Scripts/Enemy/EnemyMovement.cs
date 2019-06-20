@@ -5,14 +5,24 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public float speed = 2f;
-    public WavePatternController wavePatternController;
+    private WavePatternController wavePatternController;
 
+    private Transform[] waypointSet;
     private Transform currentWaypoint;
     private int WaypointIndex = 0;
-    
+
+    private void Awake()
+    {
+        // this exists because prefabs don't accept nonstatic classes.
+        // information of that class must be passed for this class to work.
+        // this is a workaround.
+        wavePatternController = GameObject.Find("EnemyController").GetComponent<WavePatternController>();
+    }
+
     void Start()
     {
-        currentWaypoint = wavePatternController.waypointSet[0];
+        waypointSet = wavePatternController.getWaypointSet();
+        currentWaypoint = waypointSet[0];
     }
     
     void Update()
@@ -28,13 +38,13 @@ public class EnemyMovement : MonoBehaviour
 
     void NextWaypoint()
     {
-        if (WaypointIndex >= wavePatternController.waypointSet.Length - 1)
+        if (WaypointIndex >= waypointSet.Length - 1)
         {
             Destroy(gameObject);
             return;
         }
-
+        
         WaypointIndex++;
-        currentWaypoint = wavePatternController.waypointSet[WaypointIndex];
+        currentWaypoint = waypointSet[WaypointIndex];
     }
 }
