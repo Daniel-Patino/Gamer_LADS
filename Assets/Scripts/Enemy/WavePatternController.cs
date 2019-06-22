@@ -41,6 +41,7 @@ public class WavePatternController : MonoBehaviour
         // reinitialize
         initialGrace = true;
         timeSincePreviousWaveBegan = 0;
+        prevWaveSpawnScore = 0;
         waveActive = false;
             // reset waves to initial state: only first child active
         if (WaveContainer.transform.childCount != 0)
@@ -73,12 +74,13 @@ public class WavePatternController : MonoBehaviour
         meteorRemainCount = meteorSpawner.spawnCountRemaining;
         currentScore = userInterfaceController.waveTextHandler.getCurrentScore();
         int scoreInterval = currentScore - prevWaveSpawnScore;
-        float timeInterval = timeSincePreviousWaveBegan - timeElapsed;
+        float timeInterval = timeElapsed - timeSincePreviousWaveBegan;
 
         // initial grace period
         if (initialGrace == true && timeElapsed > startWait)
         {
             initialGrace = false;
+                Debug.Log("initial grace ended");
         }
 
         // main executor
@@ -87,6 +89,7 @@ public class WavePatternController : MonoBehaviour
         {
             if (scoreInterval > scoreIntToSpawnNextWave)
             {
+                // Debug.Log("meteor: " + meteorRemainCount + " | wavesleft: " + waveReader.wavesLeft + " | waveactive: " + waveActive + " | timeinterval: " + timeInterval);
                 if (meteorRemainCount > 0
                     && waveReader.wavesLeft > 0
                     && waveActive == false
@@ -96,8 +99,18 @@ public class WavePatternController : MonoBehaviour
                     prevWaveSpawnScore = currentScore; // reset score interval
 
                     waveReader.WavePointSetter();
+                        Debug.Log("waypoint setter activated");
                     StartCoroutine(NewWaveSpawner());
+                        Debug.Log("wave spawner activated");
                     waveReader.setNextWave();
+                        Debug.Log("pointer moved to next set");
+
+                    // ---> spawns 5 enemies first wave, red error second wave.
+                    /* wavereader.initialsetup writes the correct enemy count into enemieseachwave...
+                     * 
+                     * problem is that waveReader.setNextWave() occurs before NewWaveSpawner.EnemiesToSpawn.
+                     * i.e. the information isn't read into NewWaveSpawner before it switches...
+                     */
                 }
 
             }
@@ -114,6 +127,8 @@ public class WavePatternController : MonoBehaviour
         yield return new WaitForSeconds(waveWait); // initial wait
         int EnemiesToSpawn = waveReader.getWaveEnemyCount(waveReader.getCurrentWave(), waveReader.enemiesEachWave); // this long thing is just a bunch of getters.
         float timing = interimWait;
+
+        Debug.Log(EnemiesToSpawn);
 
         for (int i = 0; i < EnemiesToSpawn; i++)
         {

@@ -2081,10 +2081,10 @@ MonoBehaviour:
   userInterfaceController: {fileID: 644198727}
   meteorSpawner: {fileID: 644198726}
   waypointSet: []
-  startWait: 5
-  interimWait: 5
-  waveWait: 10
-  scoreIntToSpawnNextWave: 0
+  startWait: 2
+  interimWait: 2
+  waveWait: 2
+  scoreIntToSpawnNextWave: 10
 --- !u!1 &795082650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8360002566533312929, guid: 561d9eca7d1d0fe4ba489907eb19d9cc,
