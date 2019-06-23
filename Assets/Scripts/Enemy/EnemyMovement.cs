@@ -7,6 +7,8 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 2f;
     private WavePatternController wavePatternController;
 
+    private bool signalSent = false;
+
     private Transform[] waypointSet;
     private Transform currentWaypoint;
     private int WaypointIndex = 0;
@@ -24,7 +26,11 @@ public class EnemyMovement : MonoBehaviour
         waypointSet = wavePatternController.getWaypointSet();
         currentWaypoint = waypointSet[0];
     }
-    
+
+    /* private bool print0 = false;
+    * private bool print1 = false;
+    * private bool print2 = false;
+    */
     void Update()
     {
         Vector3 dir = currentWaypoint.position - transform.position;
@@ -33,6 +39,31 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, currentWaypoint.position) <= 0.2f)
         {
             NextWaypoint();
+        }
+
+        /* if (WaypointIndex == 0 && print0 == false)
+        * {
+        *     Debug.Log(WaypointIndex);
+        *     print0 = true;
+        * }
+        * else if (WaypointIndex == 1 && print1 == false)
+        * {
+        *     Debug.Log(WaypointIndex);
+        *     print1 = true;
+        * }
+        * else if (WaypointIndex == 2 && print2 == false)
+        * {
+        *     Debug.Log(WaypointIndex);
+        *     print2 = true;
+        * }
+        */ 
+            
+        if (WaypointIndex == 2 && signalSent == false)
+        {
+            // some sort of signal... what would it be?
+            wavePatternController.movementTriggeredSignal = true;
+            signalSent = true;
+            Debug.Log(signalSent);
         }
     }
 

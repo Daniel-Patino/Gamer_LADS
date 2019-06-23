@@ -18,6 +18,9 @@ public class WavePatternController : MonoBehaviour
     public MeteorSpawner meteorSpawner;
     private int meteorRemainCount;
 
+    // Writers
+    public bool movementTriggeredSignal;
+
     // Carriers
     [HideInInspector] public Transform[] waypointSet;
 
@@ -43,7 +46,7 @@ public class WavePatternController : MonoBehaviour
         timeSincePreviousWaveBegan = 0;
         prevWaveSpawnScore = 0;
         waveActive = false;
-            // reset waves to initial state: only first child active
+        movementTriggeredSignal = false;   
         if (WaveContainer.transform.childCount != 0)
         {
             for (int i = 0; i < waveReader.wavesTotal; i++)
@@ -52,7 +55,7 @@ public class WavePatternController : MonoBehaviour
             }
             WaveContainer.transform.GetChild(0).gameObject.SetActive(true);
         }
-
+            // reset waves to initial state: only first child active
         // TEST AREA
     }
 
@@ -89,7 +92,6 @@ public class WavePatternController : MonoBehaviour
         {
             if (scoreInterval > scoreIntToSpawnNextWave)
             {
-                // Debug.Log("meteor: " + meteorRemainCount + " | wavesleft: " + waveReader.wavesLeft + " | waveactive: " + waveActive + " | timeinterval: " + timeInterval);
                 if (meteorRemainCount > 0
                     && waveReader.wavesLeft > 0
                     && waveActive == false
@@ -104,13 +106,6 @@ public class WavePatternController : MonoBehaviour
                         Debug.Log("wave spawner activated");
                     waveReader.setNextWave();
                         Debug.Log("pointer moved to next set");
-
-                    // ---> spawns 5 enemies first wave, red error second wave.
-                    /* wavereader.initialsetup writes the correct enemy count into enemieseachwave...
-                     * 
-                     * problem is that waveReader.setNextWave() occurs before NewWaveSpawner.EnemiesToSpawn.
-                     * i.e. the information isn't read into NewWaveSpawner before it switches...
-                     */
                 }
 
             }
@@ -123,18 +118,19 @@ public class WavePatternController : MonoBehaviour
     {
         waveActive = true;
 
-        Debug.Log("spawn buffer wait");
-        yield return new WaitForSeconds(waveWait); // initial wait
         int EnemiesToSpawn = waveReader.getWaveEnemyCount(waveReader.getCurrentWave(), waveReader.enemiesEachWave); // this long thing is just a bunch of getters.
         float timing = interimWait;
 
-        Debug.Log(EnemiesToSpawn);
+        // everything above this line is done before waveReader.setNextWave.
+
+        yield return new WaitForSeconds(waveWait); // initial wait
 
         for (int i = 0; i < EnemiesToSpawn; i++)
         {
             Vector3 spawnPosition = new Vector3(0, 0, 10.5f);
             Quaternion spawnRotation = Quaternion.Euler(90, 0, 0);
             Instantiate(Enemy, spawnPosition, spawnRotation);
+            movementTriggeredSignal = false;
 
             Debug.Log("spawn enemy");
             if (i == EnemiesToSpawn - 1)
@@ -145,8 +141,9 @@ public class WavePatternController : MonoBehaviour
             }
             else
             {
-                Debug.Log("wait " + timing);
-                yield return new WaitForSeconds(timing); // interval wait
+                yield return new WaitUntil(() => movementTriggeredSignal == true);
+                Debug.Log("signal triggered");
+                    // interval wait
             }
         }
 
